@@ -23,7 +23,7 @@ public class WorkspaceTestCase {
         WorkspaceBody workspaceBody = new WorkspaceBody(workspace);
         jacksonUtils.init();
         String workspaceJson = jacksonUtils.toJson(workspaceBody);
-        String newWorkspaceJson = workspaceController.createWorkspace(workspaceJson);
+        String newWorkspaceJson = workspaceController.createWorkspace(workspaceJson, 200);
 
         WorkspaceBody newWorkspaceBody = jacksonUtils.fromJson(newWorkspaceJson, WorkspaceBody.class);
         String newWorkspaceId = newWorkspaceBody
@@ -35,11 +35,11 @@ public class WorkspaceTestCase {
 
         createdWorkspaceBody.getWorkspace().setName(newName);
         String updatedWorkspace = jacksonUtils.toJson(createdWorkspaceBody);
-        String updatedWorkspaceJson = workspaceController.updateWorkspace(updatedWorkspace, newWorkspaceId);
+        String updatedWorkspaceJson = workspaceController.updateWorkspace(updatedWorkspace, newWorkspaceId, 200);
         Workspace updatedWorkspaceData = getData(updatedWorkspaceJson).getWorkspace();
         compareWorkspaceData(workspaceData, updatedWorkspaceData);
 
-        workspaceController.deleteWorkspace(newWorkspaceId);
+        workspaceController.deleteWorkspace(newWorkspaceId, 200);
 
     }
 
@@ -55,7 +55,7 @@ public class WorkspaceTestCase {
         String workspaceId = workspaceBody
                 .getWorkspace()
                 .getId();
-        String workspaceBodyJson = workspaceController.getWorkspace(workspaceId);
+        String workspaceBodyJson = workspaceController.getWorkspace(workspaceId, 200);
         return jacksonUtils.fromJson(workspaceBodyJson, WorkspaceBody.class);
     }
 }
